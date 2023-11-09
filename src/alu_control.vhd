@@ -23,9 +23,19 @@ begin
             alu_control <= "0010"; -- ad
         elsif alu_op = "01" then -- beq use sub to detect zero
             alu_control <= "0110" -- sub
-        elsif alu_op = "10" then
-            
-
+        elsif alu_op = "10" then -- R-type
+            if instr_30 = '1' then
+                alu_control <= "0110"; -- sub
+            else
+                if instr_14to12 = "000" then
+                    alu_control <= "0010"; -- add
+                elsif instr_14to12 = "111" then
+                    alu_control <= "0000"; -- and
+                elsif instr_14to12 = "110" then
+                    alu_control <= "0001"; -- or
+                end if;
+            end if;
         end if;
     end process;
+
 end behav ; -- behav
