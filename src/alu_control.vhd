@@ -25,6 +25,7 @@ begin
             alu_control <= "0110" -- sub
         elsif alu_op = "10" then
             
+
         end if;
     end process;
 end behav ; -- behav
