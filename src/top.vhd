@@ -4,6 +4,8 @@ use ieee.numeric_std.all;
 library work;
 use work.constants_pkg.all;
 
+-- not continued this enity is frozen for the moment
+
 entity top is
 end top;
 
@@ -147,8 +149,20 @@ constant I_IMM_L        : integer := 20;
 constant S_SB_IMM_L     : integer := 25;
 
 -- signals
--- basic signal
+-- basic signals
 signal s_clk, s_rst : std_logic;
+-- instuction signals
+signal s_opcode : std_logic_vector(6 downto 0);
+signal s_rs1, s_rs2 : std_logic_vector(4 downto 0);
+signal s_rd : std_logic_vector(4 downto 0);
+
+-- alu signals
+signal s_alu_operand : std_logic_vector(DATA_LENGTH - 1 downto 0);
+
+-- control signals
+signal s_branch, s_mem_read, s_mem_to_reg, s_mem_write, s_alu_src, s_reg_write : std_logic;
+signal s_alu_op : std_logic_vector(1 downto 0); 
+
 
 
 begin
