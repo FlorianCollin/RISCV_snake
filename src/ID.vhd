@@ -22,7 +22,6 @@ entity ID is
         ------------------------------------------------------------------------------
         -- Outside control
         rst : in std_logic
-
     );  
 end ID;
 
@@ -50,6 +49,30 @@ architecture behav of ID is
         );
     end component;
 
+    signal s_rs1, s_rs2, s_rd : std_logic_vector(4 downto 0);
+
 begin
+
+    s_rs1 <= instruction(RS1_H downto RS1_L);
+    s_rs2 <= instruction(RS2_H downto RS2_L);
+    s_rd <= instruction(RD_H downto RSD_L);
+
+    inst_registers : registers
+    port map (
+        rst <= rst,
+        reg_write <= reg_write,
+        read_register_1 <= s_rs1,
+        read_register_2 <= s_rs2,
+        write_register <= s_rd,
+        write_data <= write_data,
+        read_data_1 <= read_data_1,
+        read_data_2 <= read_data_2
+    );
+
+    inst_imm_gen : imm_gen
+    port map (
+        instr <= instruction,
+        imm_gen_out <= imm_gen_out
+    );
 
 end behav ;
