@@ -1,6 +1,8 @@
 library ieee;
 use ieee.std_logic_1164.all;
-
+use ieee.numeric_std.all;
+library work;
+use work.constants_pkg.all;
 entity registers_tb is
 end registers_tb;
 
@@ -12,9 +14,9 @@ architecture tb of registers_tb is
               read_register_1 : in std_logic_vector (4 downto 0);
               read_register_2 : in std_logic_vector (4 downto 0);
               write_register  : in std_logic_vector (4 downto 0);
-              write_data      : in std_logic_vector (data_length - 1 downto 0);
-              read_data_1     : out std_logic_vector (data_length - 1 downto 0);
-              read_data_2     : out std_logic_vector (data_length - 1 downto 0));
+              write_data      : in std_logic_vector (DATA_LENGTH - 1 downto 0);
+              read_data_1     : out std_logic_vector (DATA_LENGTH - 1 downto 0);
+              read_data_2     : out std_logic_vector (DATA_LENGTH - 1 downto 0));
     end component;
 
     signal rst             : std_logic;
@@ -22,9 +24,9 @@ architecture tb of registers_tb is
     signal read_register_1 : std_logic_vector (4 downto 0);
     signal read_register_2 : std_logic_vector (4 downto 0);
     signal write_register  : std_logic_vector (4 downto 0);
-    signal write_data      : std_logic_vector (data_length - 1 downto 0);
-    signal read_data_1     : std_logic_vector (data_length - 1 downto 0);
-    signal read_data_2     : std_logic_vector (data_length - 1 downto 0);
+    signal write_data      : std_logic_vector (DATA_LENGTH - 1 downto 0);
+    signal read_data_1     : std_logic_vector (DATA_LENGTH - 1 downto 0);
+    signal read_data_2     : std_logic_vector (DATA_LENGTH - 1 downto 0);
 
 begin
 

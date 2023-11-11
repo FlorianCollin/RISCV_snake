@@ -19,7 +19,7 @@ architecture behav of pc is
 
 begin
 
-    process(clk, rst pc_in)
+    process(clk, rst, pc_in)
     begin
         if rst = '1' then
             pc_out <= (others => '0');

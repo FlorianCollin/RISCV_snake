@@ -10,16 +10,17 @@ use work.constants_pkg.all;
 -- zero signal detection
 entity alu is
     port (
-        e1, e2 : std_logic_vector(DATA_LENGTH - 1 downto 0);
-        alu_control : std_logic_vector(3 downto 0);
-        alu_result : std_logic_vector(DATA_LENGTH - 1 downto 0);
-        zero : std_logic
+        e1, e2 : in std_logic_vector(DATA_LENGTH - 1 downto 0);
+        alu_control : in std_logic_vector(3 downto 0);
+        alu_result : out std_logic_vector(DATA_LENGTH - 1 downto 0);
+        zero : out std_logic
     );
 end alu;
 
 architecture behav of alu is
 
     signal s_alu_result : std_logic_vector(DATA_LENGTH - 1 downto 0);
+    constant zero_comp : std_logic_vector(DATA_LENGTH - 1 downto 0) := (others => '0'); 
 
 begin
 
@@ -36,11 +37,11 @@ begin
 
             -- add
             when "0010" =>
-                s_alu_result <= std_logic_vector(unsigned(e1) + unsigned(e2))
+                s_alu_result <= std_logic_vector(unsigned(e1) + unsigned(e2));
             
             -- sub
             when "0110" =>
-                s_alu_result <= std_logic_vector(unsigned(e1) - unsigned(e2))
+                s_alu_result <= std_logic_vector(unsigned(e1) - unsigned(e2));
 
             when others =>
                 null;
@@ -49,10 +50,10 @@ begin
 
         alu_result <= s_alu_result;
 
-        if s_alu_result = (ohters => '0') then
+        if s_alu_result = zero_comp then
             zero <= '1';
         else
-            zero <= '0'
+            zero <= '0';
         end if;
     end process;
             

@@ -5,9 +5,6 @@ library work;
 use work.constants_pkg.all;
 
 entity top is
-    port (
-
-    );
 end top;
 
 architecture top_level of top is

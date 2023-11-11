@@ -17,12 +17,12 @@ architecture behav of alu_control is
 
 begin
 
-    process(alu_op, isntr)
+    process(alu_op, instr_30, instr_14to12)
     begin
         if alu_op = "00" then -- sd or ld use add
             alu_control <= "0010"; -- ad
         elsif alu_op = "01" then -- beq use sub to detect zero
-            alu_control <= "0110" -- sub
+            alu_control <= "0110"; -- sub
         elsif alu_op = "10" then -- R-type
             if instr_30 = '1' then
                 alu_control <= "0110"; -- sub
