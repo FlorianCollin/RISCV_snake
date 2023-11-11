@@ -4,6 +4,8 @@ use ieee.numeric_std.all;
 library work;
 use work.constants_pkg.all;
 
+-- the program counter for the instruction memory
+-- the only clk trigger module
 entity pc is
     port (
         clk : in std_logic;

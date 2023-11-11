@@ -4,6 +4,10 @@ use ieee.numeric_std.all;
 library work;
 use work.constants_pkg.all;
 
+-- executive part of the cpu
+-- can perform 4 operations for the moment :
+-- add / sub / and / or
+-- zero signal detection
 entity alu is
     port (
         e1, e2 : std_logic_vector(DATA_LENGTH - 1 downto 0);

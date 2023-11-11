@@ -6,6 +6,7 @@ use work.constants_pkg.all;
 
 entity data_memory is
     port (
+        -- the memory can be rst
         rst : in std_logic;
         -- the two signal comming from Control unit
         mem_write : in std_logic; -- for sd instruction
@@ -14,14 +15,14 @@ entity data_memory is
         write_data : in std_logic_vector(DATA_LENGTH - 1 downto 0);
 
         read_data : out std_logic_vector(DATA_LENGTH - 1 downto 0)
-
     );
 end data_memory;
 
 
 architecture behav of data_memory is
-
-    type mem_array is array (0 to 2**DATA_LENGTH - 1) of std_logic_vector(DATA_LENGTH - 1 downto 0);
+    constant MEM_SIZE : integer := 256;
+    -- we can technicaly take a size of 2^64 because of the address length
+    type mem_array is array (0 to MEM_SIZE - 1) of std_logic_vector(DATA_LENGTH - 1 downto 0);
     signal memory : mem_array := (others => (others => '0'));
 
 begin
