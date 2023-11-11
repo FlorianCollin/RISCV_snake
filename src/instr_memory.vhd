@@ -9,15 +9,12 @@ entity instr_memory is
         clk : in std_logic;
         rst : in std_logic;
         we : in std_logic;
-
         read_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
         instruction : out std_logic_vector(31 downto 0);
-
         write_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
-        instruction_in : in std_logic_vector(31 downto 0);
-
+        instruction_in : in std_logic_vector(31 downto 0)
     );
-end entity;
+end instr_memory;
 
 architecture behav of instr_memory is
 

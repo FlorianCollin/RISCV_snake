@@ -4,18 +4,18 @@ use ieee.numeric_std.all;
 library work;
 use work.constants_pkg.all;
 
-entity mux is
+entity mux_generic is
     generic (
         input_size : integer := 64
     );
     port (
-        e0, e1 : std_logic_vector(input_size - 1  downto 0);
-        s : std_logic;
-        q : std_logic_vector(input_size - 1 downto 0)
+        e0, e1 : in std_logic_vector(input_size - 1  downto 0);
+        s : in std_logic;
+        q : out std_logic_vector(input_size - 1 downto 0)
     );
-end mux;
+end mux_generic;
 
-architecture behav of mux is
+architecture behav of mux_generic is
 
 begin
 

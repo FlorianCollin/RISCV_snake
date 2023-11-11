@@ -9,7 +9,7 @@ use work.constants_pkg.all;
 entity pc is
     port (
         clk : in std_logic;
-        rst : in std_logic; --async
+        rst : in std_logic;
         pc_in : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
         pc_out : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
     );
