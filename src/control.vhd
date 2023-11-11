@@ -63,6 +63,5 @@ begin
                 null;       
         end case;
     end process;
-    
 
 end behav ; -- behav
