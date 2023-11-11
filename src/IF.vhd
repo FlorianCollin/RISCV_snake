@@ -6,13 +6,15 @@ use work.constants_pkg.all;
 
 -- instruction fecth entity
 entity IF is
+    -- Control signals
     branch_pc : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
     branch_control : in std_logic;
     ------------------------------------------------------------------------------
+    -- IF stage output
     current_pc : out std_logic_vector(INSTR_LENGTH - 1 downto 0);
     instruction : out std_logic_vector(31 downto 0);
     ------------------------------------------------------------------------------
-    -- for outside control
+    -- Outside control
     clk, rst : in std_logic;
     we : in std_logic;
     write_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
@@ -66,7 +68,7 @@ begin
 
     inst_mux : mux
     port generic (
-        input_size <= INSTR_MEM_LENFTH
+        input_size <= INSTR_MEM_LENGTH
     )
     port map (
         e0 <= s_e0,
@@ -102,4 +104,4 @@ begin
 
     current_pc <= s_current_pc;
 
-end behavv ; -- behav v
+end behav ; -- behav
