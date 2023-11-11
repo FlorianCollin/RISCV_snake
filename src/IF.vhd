@@ -12,7 +12,7 @@ entity IF is
     ------------------------------------------------------------------------------
     -- IF stage output
     current_pc : out std_logic_vector(INSTR_LENGTH - 1 downto 0);
-    instruction : out std_logic_vector(31 downto 0);
+    instruction : out std_logic_vector(31 downto 0); -- also for alu_control and control
     ------------------------------------------------------------------------------
     -- Outside control
     clk, rst : in std_logic;
