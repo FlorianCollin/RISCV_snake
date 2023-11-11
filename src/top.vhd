@@ -1,3 +1,6 @@
+-- FROZEN
+
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -139,6 +142,9 @@ constant FUNCT7_L       : integer := 25;
 constant RS2_H          : integer := 24;
 constant RS2_L          : integer := 20;
 constant RS1_H          : integer := 24;
+
+
+
 constant RS1_L          : integer := 20;
 constant RD_H           : integer := 11;
 constant RD_L           : integer := 7;
