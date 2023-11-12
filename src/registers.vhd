@@ -44,8 +44,8 @@ begin
     end process;
     
     -- direct ouptut
-    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when not rst else (others => '0');
-    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when not rst else (others => '0');
+    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when rst = '1' else (others => '0');
+    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when rst = '1' else (others => '0');
 
 
 end behav ; -- behav

@@ -5,30 +5,33 @@ library work;
 use work.constants_pkg.all;
 
 -- instruction fecth entity
-entity IF is
+entity instr_fetch
+ is
     -- Control signals
-    branch_pc : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
-    branch_control : in std_logic;
-    ------------------------------------------------------------------------------
-    -- IF stage output
-    current_pc : out std_logic_vector(INSTR_LENGTH - 1 downto 0);
-    instruction : out std_logic_vector(31 downto 0); -- also for alu_control and control
-    ------------------------------------------------------------------------------
-    -- Outside control
-    clk, rst : in std_logic;
-    we : in std_logic;
-    write_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
-    instruction_in : in std_logic_vector(31 downto 0)
-end IF;
+    port (
+        branch_pc : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+        branch_control : in std_logic;
+        ------------------------------------------------------------------------------
+        pc_address : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+        instruction : out std_logic_vector(31 downto 0); -- also for alu_control and control
+        ------------------------------------------------------------------------------
+        -- Outside control
+        clk, rst : in std_logic;
+        we : in std_logic;
+        write_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+        instruction_in : in std_logic_vector(31 downto 0)
+    );
+end instr_fetch;
 
-architecture behav of IF is
+architecture behav of instr_fetch is
     -- components declaration :
     component add is
         port (
             add_in : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
-            add_out : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
+            add_out : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
         );
     end component;
+
     component pc is
         port (
             clk : in std_logic;
@@ -60,48 +63,48 @@ architecture behav of IF is
     end component;
 
     -- signals
-    signal s_current_pc : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+    signal s_pc_address : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
     signal s_pc_in : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
     signal s_e0 : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
 
 begin
 
-    inst_mux : mux
-    port generic (
-        input_size <= INSTR_MEM_LENGTH
+    inst_mux_if : mux_generic
+    generic map (
+        input_size => INSTR_MEM_LENGTH
     )
     port map (
-        e0 <= s_e0,
-        e1 <= branch_pc,
-        s <= branch_control,
-        q <= s_pc_in
+        e0 => s_e0,
+        e1 => branch_pc,
+        s => branch_control,
+        q => s_pc_in
     );
 
     inst_pc : pc
     port map (
-        clk <= clk,
-        rst <= rst,
-        pc_in <= s_pc_in,
-        pc_out <= s_current_pc
+        clk => clk,
+        rst => rst,
+        pc_in => s_pc_in,
+        pc_out => s_pc_address
     );
 
-    inst_instr_mem : instr_mem
+    inst_instr_mem : instr_memory
     port map (
-        clk <= clk,
-        rst <= rst,
-        we <= we,
-        read_address <= s_current_pc,
-        instruction <= instruction,
-        write_address <= write_address,
-        instruction_in <= instruction_in
+        clk => clk,
+        rst => rst,
+        we => we,
+        read_address => s_pc_address,
+        instruction => instruction,
+        write_address => write_address,
+        instruction_in => instruction_in
     );
 
     inst_add : add
     port map (
-        add_in <= s_current_pc,
-        add_out <= s_e0
+        add_in => s_pc_address,
+        add_out => s_e0
     );
 
-    current_pc <= s_current_pc;
+    pc_address <= s_pc_address;
 
 end behav ; -- behav

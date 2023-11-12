@@ -7,7 +7,7 @@ use work.constants_pkg.all;
 entity add_sum is
     port (
         e1, e2 : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0); -- signed
-        add_out : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
+        add_sum_result : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
     );
 end add_sum;
 
@@ -17,7 +17,7 @@ begin
 
     process(e1, e2)
     begin
-        add_out <= std_logic_vector(signed(e1) + signed(e2));
+        add_sum_result <= std_logic_vector(signed(e1) + signed(e2));
     end process;
 
 end behav ; -- behav
