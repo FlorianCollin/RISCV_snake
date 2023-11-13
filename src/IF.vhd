@@ -5,10 +5,9 @@ library work;
 use work.constants_pkg.all;
 
 -- instruction fecth entity
-entity instr_fetch
- is
-    -- Control signals
+entity instr_fetch is
     port (
+        -- Control signals
         branch_pc : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
         branch_control : in std_logic;
         ------------------------------------------------------------------------------
