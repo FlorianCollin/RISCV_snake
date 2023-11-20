@@ -34,6 +34,6 @@ begin
         end if;
     end process;
 
-    instruction <= memory(to_integer(unsigned(read_address))) when rst ='1' else (others => '0');
+    instruction <= memory(to_integer(unsigned(read_address))) when rst ='0' else (others => '0');
 
 end behav ; -- behav

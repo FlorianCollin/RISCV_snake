@@ -10,6 +10,7 @@ entity pc is
     port (
         clk : in std_logic;
         rst : in std_logic;
+        enable : in std_logic;
         pc_in : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
         pc_out : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0)
     );
@@ -24,7 +25,9 @@ begin
         if rst = '1' then
             pc_out <= (others => '0');
         elsif rising_edge(clk) then
-            pc_out <= pc_in;
+            if enable = '1' then
+                pc_out <= pc_in;
+            end if;
         end if;
     end process;  
 

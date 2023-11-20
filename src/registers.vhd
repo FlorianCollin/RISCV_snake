@@ -38,14 +38,14 @@ begin
             memory <= (others => (others => '0'));
         else
             if reg_write = '1' then
-                memory(to_integer(unsigned(write_register))) <= write_register;
+                memory(to_integer(unsigned(write_register))) <= write_data;
             end if;
         end if;
     end process;
     
     -- direct ouptut
-    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when rst = '1' else (others => '0');
-    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when rst = '1' else (others => '0');
+    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when rst = '0' else (others => '0');
+    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when rst = '0' else (others => '0');
 
 
 end behav ; -- behav

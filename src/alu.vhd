@@ -24,9 +24,9 @@ architecture behav of alu is
 
 begin
 
-    process(e1, e2, alu_control)
+    process(e1, e2, alu_control_selector)
     begin
-        case alu_control is
+        case alu_control_selector is
             -- and
             when "0000" =>
                 s_alu_result <= e1 and e2;

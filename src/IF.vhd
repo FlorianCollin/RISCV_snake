@@ -8,8 +8,9 @@ use work.constants_pkg.all;
 entity instr_fetch is
     port (
         -- Control signals
+        pc_src : in std_logic;
+        ------------------------------------------------------------------------------
         branch_pc : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
-        branch_control : in std_logic;
         ------------------------------------------------------------------------------
         pc_address : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
         instruction : out std_logic_vector(31 downto 0); -- also for alu_control and control
@@ -75,7 +76,7 @@ begin
     port map (
         e0 => s_e0,
         e1 => branch_pc,
-        s => branch_control,
+        s => pc_src, -- control address
         q => s_pc_in
     );
 
@@ -84,7 +85,7 @@ begin
         clk => clk,
         rst => rst,
         pc_in => s_pc_in,
-        pc_out => s_pc_address
+        pc_out => s_pc_address -- current instruction address
     );
 
     inst_instr_mem : instr_memory
@@ -92,8 +93,8 @@ begin
         clk => clk,
         rst => rst,
         we => we,
-        read_address => s_pc_address,
-        instruction => instruction,
+        read_address => s_pc_address, -- pc output
+        instruction => instruction, -- output
         write_address => write_address,
         instruction_in => instruction_in
     );

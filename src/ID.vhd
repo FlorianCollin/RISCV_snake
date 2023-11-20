@@ -18,6 +18,8 @@ entity instr_decod is
         read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
         imm_gen_out : out std_logic_vector(DATA_LENGTH - 1 downto 0);
         pc_address_out : out std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+
+        instuction_out : out std_logic_vector(31 downto 0); --- use for control enity
         ------------------------------------------------------------------------------
         write_data : in std_logic_vector(DATA_LENGTH - 1 downto 0);
         ------------------------------------------------------------------------------
@@ -75,5 +77,7 @@ begin
         instr => instruction,
         imm_gen_out => imm_gen_out
     );
+
+    instruction_out <= instruction;
 
 end behav ;
