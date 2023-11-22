@@ -17,18 +17,23 @@ entity pc is
 end pc;
 
 architecture behav of pc is
-
+    --signal s_pc : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
+    signal init : std_logic := '0';
 begin
 
-    process(clk, rst, pc_in)
+    process(clk, rst, pc_in, enable)
     begin
         if rst = '1' then
             pc_out <= (others => '0');
         elsif rising_edge(clk) then
-            if enable = '1' then
+            if init = '0' then
+                pc_out <= (others => '0');
+                init <= '1'; -- initialisation finie
+            elsif enable = '1' then
                 pc_out <= pc_in;
             end if;
         end if;
-    end process;  
+    end process;
+
 
 end behav ; -- behav

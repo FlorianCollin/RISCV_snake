@@ -20,7 +20,10 @@ entity registers is
         write_data : in std_logic_vector(DATA_LENGTH - 1 downto 0);
         -- output data
         read_data_1 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
-        read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0)
+        read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
+
+        print_register : in std_logic_vector(4 downto 0);
+        print_data : out std_logic_vector(DATA_LENGTH - 1 downto 0)
     );
 end registers;
 

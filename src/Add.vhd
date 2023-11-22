@@ -13,8 +13,9 @@ end add;
 
 architecture behav of add is
 
-    constant incr_value : integer := 4;
-    signal s_add_out : unsigned(INSTR_MEM_LENGTH - 1 downto 0);
+    constant incr_value : integer := 1;
+    signal s_add_out : unsigned(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
+
 begin
 
     process(add_in)

@@ -16,16 +16,18 @@ entity mux_generic is
 end mux_generic;
 
 architecture behav of mux_generic is
+    signal s_q : std_logic_vector(input_size - 1 downto 0) := (others => '0');
 
 begin
 
     process(e0, e1, s)
     begin
         if s = '0' then
-            q <= e0;
+            s_q <= e0;
         else
-            q <= e1;
+            s_q <= e1;
         end if;
     end process;
 
+    q <= s_q;
 end behav ; -- behav

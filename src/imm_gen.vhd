@@ -12,12 +12,14 @@ entity imm_gen is
 end imm_gen;
 
 architecture behav of imm_gen is
+    signal s_val : integer;--signed(11 downto 0);
 
 begin
 
     process(instr)
     begin
-        imm_gen_out <=  x"FFFFFFFFFFFFF" & instr(11 downto 5) & instr(4 downto 0);
+        s_val <= to_integer(signed(instr(11 downto 5) & instr(4 downto 0)));
+        imm_gen_out <= std_logic_vector(to_signed(s_val, DATA_LENGTH));
     end process;
 
 end behav ; -- behav

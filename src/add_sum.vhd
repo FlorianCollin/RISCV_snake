@@ -13,7 +13,7 @@ entity add_sum is
 end add_sum;
 
 architecture behav of add_sum is
-    signal s_e2 : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+    signal s_e2 : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
 
 begin
 

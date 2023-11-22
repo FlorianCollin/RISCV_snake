@@ -52,13 +52,21 @@ begin
         write_address <= (others => '0');
         instruction_in <= (others => '0');
         wait for 10 ns;
+        rst <= '0';
         we <= '1';
-        instruction_in <= "00000000000100010000000110110011";
+        -- Ecriture de l'instuction : add x3 x1 x2 dans l'addresse 0 et 1 de la mémoire d'instruction
+        instruction_in <= "0000000" & "00001" & "00010" & "000" & "00011" & "0110011";
         wait for 10 ns;
         write_address <= std_logic_vector(to_unsigned(1,INSTR_MEM_LENGTH));
         wait for 10 ns;
+        write_address <= std_logic_vector(to_unsigned(2,INSTR_MEM_LENGTH));
+        -- add x3 x1 x3
+        instruction_in <= "0000000" & "00011" & "00001" & "000" & "00011" & "0110011";
+        wait for 10 ns;
         we <= '0';
         pc_enable <= '1';
+        wait for 100 ns;
+        pc_enable <= '0';
         
         --pc_enable <= '1';
 

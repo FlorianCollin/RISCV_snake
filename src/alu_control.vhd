@@ -20,7 +20,7 @@ begin
     process(alu_op, instr_30, instr_14to12)
     begin
         if alu_op = "00" then -- sd or ld use add
-            alu_control_selector <= "0010"; -- ad
+            alu_control_selector <= "0010"; -- add
         elsif alu_op = "01" then -- beq use sub to detect zero
             alu_control_selector <= "0110"; -- sub
         elsif alu_op = "10" then -- R-type

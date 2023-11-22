@@ -6,6 +6,11 @@ use work.constants_pkg.all;
 
 entity riscv_no_pipeline is
     port (
+        -- for debug
+        SW : in std_logic_vector(4 downto 0); -- the reigister address to print comming from switches values
+        print_data : out std_logic_vector(DATA_LENGTH - 1 downto 0);
+        ----------------------------------------------------------------------
+        -- std
         clk : in std_logic;
         rst : in std_logic;
         we : in std_logic;
@@ -91,6 +96,7 @@ architecture top_level of riscv_no_pipeline is
             we : in std_logic;
             read_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
             instruction : out std_logic_vector(31 downto 0);
+            --
             write_address : in std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
             instruction_in : in std_logic_vector(31 downto 0)
         );
@@ -125,7 +131,7 @@ architecture top_level of riscv_no_pipeline is
         );
     end component;
 
-    component registers is
+    component registers_debug is
         port (
             rst : in std_logic;
             reg_write : in std_logic; -- write enable
@@ -137,19 +143,22 @@ architecture top_level of riscv_no_pipeline is
             write_data : in std_logic_vector(DATA_LENGTH - 1 downto 0);
             -- output data
             read_data_1 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
-            read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0)
+            read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
+            print_register : in std_logic_vector(4 downto 0);
+            print_data : out std_logic_vector(DATA_LENGTH - 1 downto 0)
         );
     end component;
     
     -- signals
 
     -- controls signals
-    signal s_pc_src, s_branch, s_mem_read, s_mem_to_reg, s_mem_write, s_alu_src, s_reg_write : std_logic;
+    signal s_pc_src, s_branch, s_mem_read, s_mem_to_reg, s_mem_write, s_alu_src, s_reg_write : std_logic := '0';
     signal s_alu_op : std_logic_vector(1 downto 0);
 
-    signal s_mux_if_e0 : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+    signal s_mux_if_e0 : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
 
-    signal s_pc_in, s_pc_out : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0);
+    signal s_pc_in : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
+    signal s_pc_out : std_logic_vector(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
     signal s_instruction : std_logic_vector(31 downto 0);
     signal s_opcode : std_logic_vector(6 downto 0);
     signal s_rs1, s_rs2, s_rd : std_logic_vector(4 downto 0);
@@ -168,6 +177,7 @@ architecture top_level of riscv_no_pipeline is
     signal s_alu_e2 :  std_logic_vector(DATA_LENGTH - 1 downto 0);
     signal s_alu_result : std_logic_vector(DATA_LENGTH - 1 downto 0);
     signal s_read_data : std_logic_vector(DATA_LENGTH - 1 downto 0);
+    signal s_sw : std_logic_vector(4 downto 0);
 
 begin
     s_opcode <= s_instruction(OPCODE_H downto OPCODE_L);
@@ -175,6 +185,8 @@ begin
     s_rs2 <= s_instruction(RS2_H downto RS2_L);
     s_rd <= s_instruction(RD_H downto RD_L);
     s_instr_30 <= s_instruction(30);
+    s_instr_14to12 <= s_instruction(14 downto 12);
+
 
     s_pc_src <= s_zero and s_branch;
     
@@ -209,9 +221,10 @@ begin
         rst => rst,
         enable => pc_enable,
         pc_in => s_pc_in,
-        pc_out => s_pc_out -- current instruction address
+        pc_out => s_pc_out-- current instruction address
     );
 
+    
     inst_instr_mem : instr_memory
     port map (
         clk => clk,
@@ -219,7 +232,7 @@ begin
         we => we,
         read_address => s_pc_out, -- pc output
         instruction => s_instruction, -- output
-        -- data from uart for instruction mem register
+        -- data from uart/rom for instruction mem register
         write_address => write_address,
         instruction_in => instruction_in
     );
@@ -230,7 +243,7 @@ begin
         add_out => s_mux_if_e0
     );
 
-    inst_registers : registers
+    inst_registers_debug : registers_debug
     port map (
         rst => rst,
         reg_write => s_reg_write,
@@ -239,7 +252,9 @@ begin
         write_register => s_rd,
         write_data => s_write_data,
         read_data_1 => s_read_data_1,
-        read_data_2 => s_read_data_2
+        read_data_2 => s_read_data_2,
+        print_register => s_sw, -- the address of the register to print
+        print_data => print_data
     );
 
     inst_imm_gen : imm_gen
@@ -294,6 +309,9 @@ begin
     );
 
     inst_mux_wb : mux_generic
+    generic map (
+        input_size => DATA_LENGTH
+    )
     port map (
         e0 => s_alu_result,
         e1 => s_read_data,

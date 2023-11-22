@@ -45,16 +45,16 @@ begin
 
             when others =>
                 null;
-
         end case;
-
-        alu_result <= s_alu_result;
 
         if s_alu_result = zero_comp then
             zero <= '1';
         else
             zero <= '0';
         end if;
+
     end process;
+
+    alu_result <= s_alu_result;
             
 end behav ; -- behav
