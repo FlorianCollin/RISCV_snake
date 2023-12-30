@@ -20,7 +20,10 @@ entity registers is
         write_data : in std_logic_vector(DATA_LENGTH - 1 downto 0);
         -- output data
         read_data_1 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
-        read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0)
+        read_data_2 : out std_logic_vector(DATA_LENGTH - 1 downto 0);
+
+        print_register : in std_logic_vector(4 downto 0);
+        print_data : out std_logic_vector(DATA_LENGTH - 1 downto 0)
     );
 end registers;
 
@@ -29,6 +32,7 @@ architecture behav of registers is
     constant NUMB_REG : integer := 32;
     type mem_array is array (0 to NUMB_REG - 1) of std_logic_vector(DATA_LENGTH - 1 downto 0);
     -- signal memory : mem_array := (others => (others => '0'));
+    -- by default the memory as the values below ! for debug
     signal memory : mem_array := (
         std_logic_vector(to_unsigned(0, DATA_LENGTH)), -- always 0 !!!!!!!!!!!!!!!!!
         std_logic_vector(to_unsigned(1, DATA_LENGTH)),

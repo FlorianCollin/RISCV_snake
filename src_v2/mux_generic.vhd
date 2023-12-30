@@ -22,10 +22,10 @@ begin
 
     process(e0, e1, s)
     begin
-        if s = '1' then
-            s_q <= e1;
+        if s = '0' then
+            s_q <= e0;
         else
-            s_q <= e0;   
+            s_q <= e1;
         end if;
     end process;
 

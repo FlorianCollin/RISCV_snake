@@ -60,8 +60,16 @@ begin
                 mem_write   <= '0';
                 branch      <= '1';
                 alu_op      <= "01";
-            when others =>
-                null; 
+            when "0010011" => -- addi
+                -- e2 of alu come from the imm_gen
+                alu_src <= '1';
+                reg_write <= '1';
+                mem_read <= '0';
+                mem_write <= '1';
+                branch <= '0';
+                alu_op <= "11";
+            when others
+                null;
                   
         end case;
     end process;

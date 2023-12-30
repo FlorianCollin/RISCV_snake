@@ -29,9 +29,11 @@ end registers;
 
 
 architecture behav of registers is
+    constant address0 : std_logic_vector(4 downto 0) := (others => '0');
     constant NUMB_REG : integer := 32;
     type mem_array is array (0 to NUMB_REG - 1) of std_logic_vector(DATA_LENGTH - 1 downto 0);
     -- signal memory : mem_array := (others => (others => '0'));
+    -- by default the memory as the values below ! for debug
     signal memory : mem_array := (
         std_logic_vector(to_unsigned(0, DATA_LENGTH)), -- always 0 !!!!!!!!!!!!!!!!!
         std_logic_vector(to_unsigned(1, DATA_LENGTH)),
@@ -81,8 +83,11 @@ begin
     end process;
     
     -- direct ouptut
-    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when rst = '0' else (others => '0');
-    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when rst = '0' else (others => '0');
+    print_data  <= memory(to_integer(unsigned(print_register)))  when print_register /= address0                else (others => '0');
+    read_data_1 <= memory(to_integer(unsigned(read_register_1))) when rst = '0' and read_register_1 /= address0 else (others => '0');
+    read_data_2 <= memory(to_integer(unsigned(read_register_2))) when rst = '0' and read_register_2 /= address0 else (others => '0');
+
+    
 
 
 end behav ; -- behav

@@ -177,7 +177,7 @@ architecture top_level of riscv_no_pipeline is
     signal s_alu_e2 :  std_logic_vector(DATA_LENGTH - 1 downto 0);
     signal s_alu_result : std_logic_vector(DATA_LENGTH - 1 downto 0);
     signal s_read_data : std_logic_vector(DATA_LENGTH - 1 downto 0);
-    signal s_SW : std_logic_vector(4 downto 0);
+    signal s_sw : std_logic_vector(4 downto 0);
 
 begin
     s_opcode <= s_instruction(OPCODE_H downto OPCODE_L);
@@ -186,7 +186,7 @@ begin
     s_rd <= s_instruction(RD_H downto RD_L);
     s_instr_30 <= s_instruction(30);
     s_instr_14to12 <= s_instruction(14 downto 12);
-    s_SW <= SW;
+
 
     s_pc_src <= s_zero and s_branch;
     
@@ -253,7 +253,7 @@ begin
         write_data => s_write_data,
         read_data_1 => s_read_data_1,
         read_data_2 => s_read_data_2,
-        print_register => s_SW, -- the address of the register to print
+        print_register => s_sw, -- the address of the register to print
         print_data => print_data
     );
 

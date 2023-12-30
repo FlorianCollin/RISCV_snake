@@ -87,7 +87,6 @@ architecture top_level of top is
     signal s_pc_enable : std_logic;
 
 begin
-    s_SW <= SW(4 downto 0);
     s_clk <= clk;
     s_rst <= not rst;  
 
@@ -120,18 +119,23 @@ begin
         LED => LED
     );
 
-
-    inst_detect_impulsion_btnr : detect_impulsion
+    inst_switch : switch
     port map (
-        clock => s_clk,
-        btn_input => btnr,
-        btn_output => s_btn_led
+        SW => SW,
+        sw_value => s_SW
     );
 
     inst_detect_impulsion_btnc : detect_impulsion
     port map (
         clock => s_clk,
         btn_input => btnc,
+        btn_output => s_btn_led
+    );
+
+    inst_detect_impulsion_btnr : detect_impulsion
+    port map (
+        clock => s_clk,
+        btn_input => btnr,
         btn_output => s_pc_enable
     );
 

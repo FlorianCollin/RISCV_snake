@@ -8,7 +8,6 @@ use work.constants_pkg.all;
 -- can perform 4 operations for the moment :
 -- add / sub / and / or
 -- zero signal detection
-
 entity alu is
     port (
         e1, e2 : in std_logic_vector(DATA_LENGTH - 1 downto 0);
@@ -46,7 +45,7 @@ begin
 
             when others =>
                 null;
-
+                
         end case;
 
         if s_alu_result = zero_comp then

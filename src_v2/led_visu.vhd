@@ -33,10 +33,6 @@ begin
         end if;
     end process;
 
-    
-
-    -- we can't see print_data(63 downto 32)
-
     process(clk, print_data)
     begin
         if rising_edge(clk) then
