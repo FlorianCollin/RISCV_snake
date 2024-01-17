@@ -11,7 +11,7 @@ use work.constants_pkg.all;
 entity alu is
     port (
         e1, e2 : in std_logic_vector(DATA_LENGTH - 1 downto 0);
-        alu_control_selector : in std_logic_vector(3 downto 0);
+        alu_control_selector : in std_logic_vector(3 downto 0); -- alu control output
         alu_result : out std_logic_vector(DATA_LENGTH - 1 downto 0);
         zero : out std_logic
     );

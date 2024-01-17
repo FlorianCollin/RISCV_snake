@@ -1,3 +1,7 @@
+----------------------------------------------------------------------------------------------------
+--    (c)2023 F. COLLIN
+----------------------------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -6,8 +10,8 @@ use work.constants_pkg.all;
 
 entity alu_control is
     port (
-        alu_op : in std_logic_vector(1 downto 0);
-        instr_30 : in std_logic;
+        alu_op : in std_logic_vector(1 downto 0); -- 2 bits signals to
+        instr_30 : in std_logic; -- bit 30 of the instruction
         instr_14to12 : in std_logic_vector(2 downto 0);
         alu_control_selector : out std_logic_vector(3 downto 0)
     );
@@ -21,12 +25,14 @@ begin
     begin
         if alu_op = "00" then -- sd or ld use add
             alu_control_selector <= "0010"; -- add
+
         elsif alu_op = "01" then -- beq use sub to detect zero
             alu_control_selector <= "0110"; -- sub
+
         elsif alu_op = "10" then -- R-type
             if instr_30 = '1' then
                 alu_control_selector <= "0110"; -- sub
-            else
+            else -- instr_30 = '0'
                 if instr_14to12 = "000" then
                     alu_control_selector <= "0010"; -- add
                 elsif instr_14to12 = "111" then
@@ -35,7 +41,9 @@ begin
                     alu_control_selector <= "0001"; -- or
                 end if;
             end if;
+
         end if;
+
     end process;
 
-end behav ; -- behav
+end behav;

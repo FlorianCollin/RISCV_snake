@@ -12,7 +12,7 @@ entity imm_gen is
 end imm_gen;
 
 architecture behav of imm_gen is
-    signal s_val : integer;--signed(11 downto 0);
+    signal s_val : integer; --signed(11 downto 0);
 
 begin
 

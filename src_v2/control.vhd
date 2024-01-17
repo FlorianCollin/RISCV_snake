@@ -52,7 +52,20 @@ begin
                 mem_write   <= '1';
                 branch      <= '0';
                 alu_op      <= "00";
-            when "1100011" => -- beq
+
+            -- Imediate instruction
+            when "0010011" => -- addi 
+                -- e2 of alu come from the imm_gen
+                alu_src <= '1';     -- come from imm gen I-instr
+                mem_to_reg  <= '0'; -- no load (data mem jump)
+                reg_write <= '1';   -- wb
+                mem_read <= '0';    -- no memory read (data mem jump)
+                mem_write <= '1';   -- addi result store in mem
+                branch <= '0';      -- (no pc jump)
+                alu_op <= "11";     -- unsigned add
+
+            -- branch instruction
+            when "1100011" => -- beq (equality) rs1 == rs2 ?
                 alu_src     <= '0';
                 -- mem_to_reg  <=
                 reg_write   <= '0';
@@ -60,16 +73,18 @@ begin
                 mem_write   <= '0';
                 branch      <= '1';
                 alu_op      <= "01";
-            when "0010011" => -- addi
-                -- e2 of alu come from the imm_gen
-                alu_src <= '1';
-                reg_write <= '1';
-                mem_read <= '0';
-                mem_write <= '1';
-                branch <= '0';
-                alu_op <= "11";
-            when others
-                null;
+            
+            when others => -- opcode ?? -- a definir le cas par default
+                alu_src     <= '0';
+                mem_to_reg  <= '0';
+                reg_write   <= '0';
+                mem_read    <= '0';
+                mem_write   <= '0';
+                branch      <= '0';
+                alu_op      <= "00";
+                
+
+                
                   
         end case;
     end process;

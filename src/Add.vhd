@@ -1,3 +1,10 @@
+----------------------------------------------------------------------------------------------------
+--    (c)2023 F. COLLIN
+
+-- pc <= pc + 1
+
+----------------------------------------------------------------------------------------------------
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
@@ -13,7 +20,8 @@ end add;
 
 architecture behav of add is
 
-    constant incr_value : integer := 1;
+    constant incr_value : integer := 1; -- <-- Increment value
+
     signal s_add_out : unsigned(INSTR_MEM_LENGTH - 1 downto 0) := (others => '0');
 
 begin

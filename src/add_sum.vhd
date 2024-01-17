@@ -1,3 +1,20 @@
+----------------------------------------------------------------------------------------------------
+--    (c)2023 F. COLLIN
+
+-- Fr.
+-- Ce bloc permet d'effectuer un saut d'adresse en incrémentant la valeur de la variable pc qui pointe vers l'instruction courante.
+-- Par exemple, dans le cas d'une instruction BEQ, on teste l'égalité entre deux variables (contenues dans les registres).
+-- Si le résultat 'zéro' de l'ALU est à '1', alors la nouvelle valeur du pc (program counter) est la sortie add_sum_result.
+-- Sinon, pc <= pc + 1.
+
+-- En.
+-- This block allows for a jump in address by incrementing the value of the pc variable, which points to the current instruction.
+-- For example, in the case of a BEQ instruction, we test the equality between two variables (contained in the registers).
+-- If the 'zero' result from the ALU is '1', then the new value of the pc (program counter) is the add_sum_result output.
+-- Otherwise, pc <= pc + 1.
+----------------------------------------------------------------------------------------------------
+
+
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;

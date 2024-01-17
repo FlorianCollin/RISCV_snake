@@ -16,7 +16,8 @@ end alu_control;
 architecture behav of alu_control is
 
 begin
-
+    -- notes
+    -- instr_14to12 == funct3
     process(alu_op, instr_30, instr_14to12)
     begin
         if alu_op = "00" then -- sd or ld use add
